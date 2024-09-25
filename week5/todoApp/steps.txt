@@ -1,0 +1,7 @@
+1. create a README
+2. create a backend folder
+3. initalize a package json file (npm init/ npm init -y)
+4. write the backend paths
+5. validation - zod
+6. monogo schemas and mongoose
+7. frontend folder, initalize react app

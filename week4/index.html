@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 4.1</title>
+  </head>
+
+  <body>
+    <script>
+      function debouncePopulateDiv() {}
+      function populateDiv() {
+        const element = document.getElementById("finalSum");
+        const a = document.getElementById("firstNumber").value;
+        const b = document.getElementById("secondNumber").value;
+        // console.dir(a);
+        // element.innerHTML = ` Sum is ${parseInt(a.value) + parseInt(b.value)}`;
+
+        // connecting frontend to backend
+        // fetch(`https://sum-server.100xdevs.com/sum?a=${a}&b=${b}`).then(
+        //   (res) => {
+        //     console.log(res);
+
+        //     res.text().then((ans) => (element.innerHTML = ans));
+        //   }
+        // );
+      }
+      //cleaner way
+      async function populateDiv2() {
+        const res = await fetch(
+          `https://sum-server.100xdevs.com/sum?a=${a}&b=${b}`
+        );
+        const ans = await res.text();
+        console.log(ans);
+      }
+    </script>
+
+    <input
+      type="text"
+      name="firstNumber"
+      id="firstNumber"
+      placeholder="First number"
+      autofocus
+    />
+    <br />
+    <br />
+    <input
+      type="text"
+      name="secondNumber"
+      id="secondNumber"
+      placeholder="Second number"
+    />
+    <br />
+    <br />
+    <button onclick="populateDiv()">Calculate sum</button>
+    <div id="finalSum"></div>
+  </body>
+</html>

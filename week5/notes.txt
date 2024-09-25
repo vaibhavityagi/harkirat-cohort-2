@@ -1,0 +1,16 @@
+static website - a website which doesnt change once it has been loaded
+
+3 important things in React
+    - components
+    - state => anything on the page that changes
+    - re-rendering => state change triggers re-render, re-render is the actual dom manipulation which happens due to the state change
+
+anytime a parent re-renders, the child also re-renders
+
+# `npm run build` builds your html css and js, which can run without all the node_modules and other files
+
+
+
+
+
+url parsing - dns resolution

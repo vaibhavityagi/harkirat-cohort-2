@@ -1,0 +1,131 @@
+// docker
+
+// to run psql in cli
+
+- docker run -e POSTGRES_PASSWORD=badsecret -d -p 5432:5432 postgres
+- docker exec -it <container id> /bin/bash
+- psql -h localhost -U postgres
+
+// postgres connection string
+
+postgresql://postgres:badsecret@localhost:5432/postgres
+
+//prisma
+npm install prisma
+- npx prisma init
+- npx prisma migrate dev --name <message>
+- npx prisma generate
+
+// mongo locally
+docker run -d -p 27017:27017 mongo
+
+// ts
+- npm init -y
+- npx tsc --init
+- change rootDir to ./src
+- change outDir to ./dist
+- make src dir and add index.ts
+- tsc -b
+
+// command to public package to npm
+npm publish --access=public
+
+// aws deployement (backend)
+- start a ec2 instance
+- ssh into the server
+- add the host name and the ip address in your dns provider 
+- for reverse proxy
+    - install nginx for your ec2 instance (for ubuntu)
+        - sudo apt update
+        - sudo apt install nginx
+    - creating a reverse proxy
+        - sudo rm sudo vi /etc/nginx/nginx.conf
+        - sudo vi /etc/nginx/nginx.conf
+
+        - add this code in the file to point to the right address (:wq)
+            events {
+                # Event directives...
+            }
+
+            http {
+                # multiple servers can run
+                server {
+                listen 80;
+                server_name be1.100xdevs.com;
+
+                location / {
+                    proxy_pass http://localhost:8080;
+                    proxy_http_version 1.1;
+                    proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection 'upgrade';
+                    proxy_set_header Host $host;
+                    proxy_cache_bypass $http_upgrade;
+                }
+                }
+            }
+        - sudo nginx -s reload
+        
+        - start the server => node index.js
+
+        # for eternally running the server
+        - npm i -g pm2
+        - pm2 start index.js
+
+        - certBot for ssl certificate
+
+for http, default port: 80
+for https, default port: 443
+
+// aws deployement (frontend)
+
+- npm run build to build the static html/css/js files
+- cd into dist folder and run `serve` to serve the static files 
+- create a new bucket and upload all the files inside the dist folder into the bucket (don't directly upload the folder as the first file that is looked for is index.html)
+- create a new cloudfront distribution network (cdn), add the source, create a custom policy
+- add that policy into s3 bucket
+- connect your own domain
+- add custom error page 
+
+// Next.js
+- npx create-next-app@latest
+
+// --------------------------------------------------- common docker commands -------------------------------------------------
+- docker images
+- docker ps
+- docker run
+- docker build -t <tag/name for the container> .
+dot represents the dir where Dockerfile is present
+- docker rmi to remove an image
+- docker kill <container id>
+- docker exec => to execute a command inside the docker container
+
+=> docker exec -it <container id> /bin/bash
+allows you to ssh into the container, use it in interactive mode
+
+=> docker run -d -p portno:portno -e DATABASE_URL="" mongo
+-p = port mapping
+-d = detached mode, i.e. docker runs in the background
+-e = injection of environment variable
+
+Layers: each from, workdir, copy run command in the dockerfile creates a layer and layers get cached and can be used by other containes to reduce the build time
+Volumes: allows the data to persist, used for dbs when you want your database to persist during container starts and re-starts
+
+- docker volume create volume_database
+- docker run -v volume_database:/data/db -p 27017:27017 mongo
+
+# /data/db is the place where mongo stores the data, this is different for different databases
+
+Network: allows containers to talk to each other which normally a container can't do as each container is an isolated environment
+
+- docker network create my_custom_network
+- docker run -d -p 3000:3000 --name backend --network my_custom_network image_tag
+- docker run -d -v volume_database:/data/db --name mongocontainer --network my_custom_network -p 27017:27017 mongo
+- docker logs <container_id>
+
+# the url in the express shoud have `mongocontainer` instead of localhost
+
+
+// ------------ testing -------------------
+- unit tests: testing a part of your code, mocking db calls
+- intergration testing: starting all the external services locally
+- end to end testing: starting a browser and then run all the tests

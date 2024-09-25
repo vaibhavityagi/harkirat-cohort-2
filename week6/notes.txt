@@ -1,0 +1,20 @@
+why cant react function return more than one child?
+    - reconcilation
+
+- goal should be to minimize the number of re-renders
+    - any time a parent re-renders, all the children get re-rendered
+
+- React.memo lets you skip re-rendering a component when the props of that specific component doesn't change
+
+lifecycle of a component
+    - initalization
+    - mounting
+    - updation
+    - unmount
+
+- any function starting with 'use' is called a hook
+- hooks let you access lifecycle functions
+
+- useMemo lets you remember a value across re-renders
+
+- side effects

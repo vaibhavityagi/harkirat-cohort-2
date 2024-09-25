@@ -1,0 +1,14 @@
+command to enter in vim - `vi`
+hi there, writing content in this file using vim
+
+
+let's exit
+(press esc, :q! to exit w/o saving; :wq! to exit w saving)
+
+
+// REMAINING
+week 1 - calculator
+week 2 - done; extra: to-do using file system
+week 3 - done
+week 4 - everything
+week 5 - everything
